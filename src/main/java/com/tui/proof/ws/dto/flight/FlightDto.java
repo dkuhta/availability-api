@@ -1,5 +1,6 @@
 package com.tui.proof.ws.dto.flight;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class FlightDto implements Serializable {
     private String flightNumber;
     private String company;
     private LocalDate date;
+    @JsonFormat(pattern = "hh:mm")
     private LocalTime hours;
     private Long price;
 }
