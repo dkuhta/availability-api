@@ -1,0 +1,18 @@
+package com.tui.proof.ws.dto.booking;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+
+@Getter
+@Setter
+public class BookingDeleteFlightDto implements Serializable {
+
+    @NotBlank
+    private String bookingId;
+
+    @NotBlank
+    private String flightNumber;
+}
