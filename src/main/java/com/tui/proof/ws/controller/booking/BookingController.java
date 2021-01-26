@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import static org.springframework.http.HttpHeaders.LOCATION;
-import static org.springframework.http.HttpStatus.ACCEPTED;
 
 @RestController
 @RequestMapping("/bookings")
@@ -26,7 +25,6 @@ public class BookingController {
         this.bookingEventService = bookingEventService;
     }
 
-    @ResponseStatus(ACCEPTED)
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody BookingCreateDto dto) {
         final Event<?> event = bookingEventService.create(dto);
@@ -38,28 +36,24 @@ public class BookingController {
         return bookingService.get(id);
     }
 
-    @ResponseStatus(ACCEPTED)
     @PutMapping("/{id}/flights/{flightNumber}")
     public ResponseEntity<Void> addFlight(@PathVariable("id") String id, @PathVariable("flightNumber") String flightNumber) {
         final Event<?> event = bookingEventService.addFlight(id, flightNumber);
         return buildEventResponse(event);
     }
 
-    @ResponseStatus(ACCEPTED)
     @DeleteMapping("/{id}/flights/{flightNumber}")
     public ResponseEntity<Void> deleteFlight(@PathVariable("id") String id, @PathVariable("flightNumber") String flightNumber) {
         final Event<?> event = bookingEventService.deleteFlight(id, flightNumber);
         return buildEventResponse(event);
     }
 
-    @ResponseStatus(ACCEPTED)
     @PostMapping("/{id}/confirm")
     public ResponseEntity<Void> confirm(@PathVariable("id") String id) {
         final Event<?> event = bookingEventService.confirm(id);
         return buildEventResponse(event);
     }
 
-    @ResponseStatus(ACCEPTED)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") String id) {
         final Event<?> event = bookingEventService.delete(id);
