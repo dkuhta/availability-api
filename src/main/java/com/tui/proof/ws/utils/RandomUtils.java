@@ -14,6 +14,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+
 public final class RandomUtils {
 
     private static final Random RANDOM = new Random();
@@ -26,7 +28,7 @@ public final class RandomUtils {
     }
 
     public static String randomString() {
-        return RandomStringUtils.randomAlphanumeric(randomInt(20, 100));
+        return randomAlphanumeric(randomInt(20, 100));
     }
 
     public static String randomStringNumeric() {
@@ -58,8 +60,8 @@ public final class RandomUtils {
     public static FlightDto generateFlight() {
         FlightDto dto = new FlightDto();
         dto.setAvailabilityId(randomId());
-        dto.setFlightNumber(randomString());
-        dto.setCompany(randomString());
+        dto.setFlightNumber(randomAlphanumeric(10));
+        dto.setCompany(randomAlphanumeric(10));
         dto.setDate(LocalDate.now());
         dto.setHours(LocalTime.now());
         dto.setPrice(randomLong());

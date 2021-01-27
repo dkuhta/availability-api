@@ -34,13 +34,15 @@ class FlightControllerTest extends BaseControllerTest {
         Mockito.when(flightService.find(any(FlightFilter.class), any())).thenReturn(expected);
 
         getMvc().perform(get("/flights")
-                .param("airportOrig", randomString())
-                .param("airportDest", randomString())
+                .param("airportOrigin", randomString())
+                .param("airportDestination", randomString())
                 .param("from", "2021-03-01")
                 .param("to", "2021-04-01")
                 .param("infants", "0")
                 .param("children", "1")
                 .param("adults", "2")
+                .param("page", "0")
+                .param("size", "2")
                 .header(HttpHeaders.AUTHORIZATION, buildBasicAuthTokenWithTestUser()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalPages").value(2))

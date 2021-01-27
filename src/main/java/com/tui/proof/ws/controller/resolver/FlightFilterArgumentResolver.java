@@ -22,8 +22,8 @@ public class FlightFilterArgumentResolver implements HandlerMethodArgumentResolv
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest webRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         FlightFilter filter = new FlightFilter();
-        filter.setAirportOrigin(resolveAirportOrig(webRequest));
-        filter.setAirportDestination(resolveAirportDest(webRequest));
+        filter.setAirportOrigin(resolveAirportOrigin(webRequest));
+        filter.setAirportDestination(resolveAirportDestination(webRequest));
         filter.setFrom(resolveFrom(webRequest));
         filter.setTo(resolveTo(webRequest));
         filter.setInfants(resolveInfants(webRequest));
@@ -33,12 +33,12 @@ public class FlightFilterArgumentResolver implements HandlerMethodArgumentResolv
         return filter;
     }
 
-    protected String resolveAirportOrig(@NonNull NativeWebRequest webRequest) throws MissingServletRequestParameterException {
-        return getRequiredParam(webRequest, "airportOrig", String.class);
+    protected String resolveAirportOrigin(@NonNull NativeWebRequest webRequest) throws MissingServletRequestParameterException {
+        return getRequiredParam(webRequest, "airportOrigin", String.class);
     }
 
-    protected String resolveAirportDest(@NonNull NativeWebRequest webRequest) throws MissingServletRequestParameterException {
-        return getRequiredParam(webRequest, "airportDest", String.class);
+    protected String resolveAirportDestination(@NonNull NativeWebRequest webRequest) throws MissingServletRequestParameterException {
+        return getRequiredParam(webRequest, "airportDestination", String.class);
     }
 
     private LocalDate resolveFrom(NativeWebRequest webRequest) throws MissingServletRequestParameterException {
