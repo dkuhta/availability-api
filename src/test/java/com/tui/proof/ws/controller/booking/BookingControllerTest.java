@@ -56,7 +56,7 @@ class BookingControllerTest extends BaseControllerTest {
         MvcResult bookingCreateResult = getMvc().perform(post("/bookings")
                 .content(requestBody(bookingRequest))
                 .contentType(APPLICATION_JSON)
-                .header(AUTHORIZATION, buildBasicAuthTokenWithTestUser()))
+                .header(AUTHORIZATION, jwtTokenWithTestUser()))
                 .andExpect(status().isAccepted())
                 .andExpect(header().exists(LOCATION))
                 .andReturn();
@@ -86,7 +86,7 @@ class BookingControllerTest extends BaseControllerTest {
         final MvcResult mvcResult = getMvc().perform(post("/bookings")
                 .content("{}")
                 .contentType(APPLICATION_JSON)
-                .header(AUTHORIZATION, buildBasicAuthTokenWithTestUser()))
+                .header(AUTHORIZATION, jwtTokenWithTestUser()))
                 .andExpect(status().is4xxClientError())
                 .andReturn();
 
@@ -107,7 +107,7 @@ class BookingControllerTest extends BaseControllerTest {
         Mockito.when(bookingRepository.find(id)).thenReturn(booking);
 
         getMvc().perform(get("/bookings/{id}", id)
-                .header(AUTHORIZATION, buildBasicAuthTokenWithTestUser()))
+                .header(AUTHORIZATION, jwtTokenWithTestUser()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(booking.getId()))
@@ -131,7 +131,7 @@ class BookingControllerTest extends BaseControllerTest {
         Mockito.when(availabilityRepository.find(booking.getAvailabilityId())).thenReturn(availability);
 
         final MvcResult confirmResult = getMvc().perform(put("/bookings/{id}/flights/{flightNumber}", id, flightNumber)
-                .header(AUTHORIZATION, buildBasicAuthTokenWithTestUser()))
+                .header(AUTHORIZATION, jwtTokenWithTestUser()))
                 .andExpect(status().isAccepted())
                 .andReturn();
 
@@ -152,7 +152,7 @@ class BookingControllerTest extends BaseControllerTest {
         Mockito.when(availabilityRepository.find(booking.getAvailabilityId())).thenReturn(availability);
 
         final MvcResult confirmResult = getMvc().perform(delete("/bookings/{id}/flights/{flightNumber}", id, flightNumber)
-                .header(AUTHORIZATION, buildBasicAuthTokenWithTestUser()))
+                .header(AUTHORIZATION, jwtTokenWithTestUser()))
                 .andExpect(status().isAccepted())
                 .andReturn();
 
@@ -171,7 +171,7 @@ class BookingControllerTest extends BaseControllerTest {
         Mockito.when(availabilityRepository.find(expected.getAvailabilityId())).thenReturn(availability);
 
         final MvcResult confirmResult = getMvc().perform(post("/bookings/{id}/confirm", id)
-                .header(AUTHORIZATION, buildBasicAuthTokenWithTestUser()))
+                .header(AUTHORIZATION, jwtTokenWithTestUser()))
                 .andExpect(status().isAccepted())
                 .andReturn();
 
@@ -190,7 +190,7 @@ class BookingControllerTest extends BaseControllerTest {
         Mockito.when(availabilityRepository.find(booking.getAvailabilityId())).thenReturn(availability);
 
         final MvcResult mvcResult = getMvc().perform(delete("/bookings/{id}", id)
-                .header(AUTHORIZATION, buildBasicAuthTokenWithTestUser()))
+                .header(AUTHORIZATION, jwtTokenWithTestUser()))
                 .andExpect(status().isAccepted())
                 .andReturn();
 
@@ -228,7 +228,7 @@ class BookingControllerTest extends BaseControllerTest {
         int seconds = 10;
         for (int i = 0; i < seconds; i++) {
             final MvcResult eventResult = getMvc().perform(get(location)
-                    .header(AUTHORIZATION, buildBasicAuthTokenWithTestUser()))
+                    .header(AUTHORIZATION, jwtTokenWithTestUser()))
                     .andReturn();
 
             if (eventResult.getResponse().getStatus() == HttpStatus.OK.value()) {

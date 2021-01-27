@@ -43,7 +43,7 @@ class FlightControllerTest extends BaseControllerTest {
                 .param("adults", "2")
                 .param("page", "0")
                 .param("size", "2")
-                .header(HttpHeaders.AUTHORIZATION, buildBasicAuthTokenWithTestUser()))
+                .header(HttpHeaders.AUTHORIZATION, jwtTokenWithTestUser()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalPages").value(2))
                 .andExpect(jsonPath("$.totalElements").value(total))
@@ -55,7 +55,7 @@ class FlightControllerTest extends BaseControllerTest {
     @Test
     void get_flight_and_expect_bad_request() throws Exception {
         getMvc().perform(get("/flights")
-                .header(HttpHeaders.AUTHORIZATION, buildBasicAuthTokenWithTestUser()))
+                .header(HttpHeaders.AUTHORIZATION, jwtTokenWithTestUser()))
                 .andExpect(status().isBadRequest());
     }
 }

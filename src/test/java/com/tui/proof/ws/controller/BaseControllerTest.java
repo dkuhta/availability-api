@@ -1,14 +1,21 @@
 package com.tui.proof.ws.controller;
 
-import org.apache.tomcat.util.codec.binary.Base64;
+import com.tui.proof.ws.security.JwtRequest;
+import com.tui.proof.ws.security.JwtResponse;
+import com.tui.proof.ws.utils.MvcTestUtils;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
-import java.nio.charset.StandardCharsets;
+import static com.tui.proof.ws.utils.MvcTestUtils.requestBody;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -28,14 +35,25 @@ public class BaseControllerTest {
         return mvc;
     }
 
-    protected String buildBasicAuthTokenWithTestUser() {
-        return buildBasicAuthToken(username, password);
+    protected String jwtTokenWithTestUser() {
+        return jwtAuthToken(username, password);
     }
 
-    protected String buildBasicAuthToken(String username, String password) {
-        String auth = username + ":" + password;
-        byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.ISO_8859_1));
-        return "Basic " + new String(encodedAuth);
+    @SneakyThrows
+    protected String jwtAuthToken(String username, String password) {
+        JwtRequest jwtRequest = new JwtRequest();
+        jwtRequest.setUsername(username);
+        jwtRequest.setPassword(password);
+
+        MvcResult authResult = getMvc().perform(post("/auth")
+                .content(requestBody(jwtRequest))
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        final JwtResponse jwtResponse = MvcTestUtils.parseResponse(authResult, JwtResponse.class);
+
+        return "Bearer " + jwtResponse.getJwttoken();
     }
 
     public String getUsername() {
