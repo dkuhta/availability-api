@@ -7,13 +7,22 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String[] SWAGGER_ENDPOINTS = new String[]{
+            "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/webjars/**"
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                .anyRequest().authenticated()
+                .antMatchers(SWAGGER_ENDPOINTS).permitAll()
+                .antMatchers("/**").authenticated()
                 .and()
                 .csrf().disable();
     }
