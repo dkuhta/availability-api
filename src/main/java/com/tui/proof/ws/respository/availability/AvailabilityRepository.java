@@ -7,4 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class AvailabilityRepository extends InMemoryRepositoryImpl<AvailabilityModel> {
 
+    @Override
+    protected String getObjectName() {
+        return "availability";
+    }
 }

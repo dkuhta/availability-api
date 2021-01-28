@@ -7,4 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookingRepository extends InMemoryRepositoryImpl<BookingModel> {
 
+    @Override
+    protected String getObjectName() {
+        return "booking";
+    }
 }

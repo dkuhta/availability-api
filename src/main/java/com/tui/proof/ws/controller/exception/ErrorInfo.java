@@ -1,5 +1,6 @@
 package com.tui.proof.ws.controller.exception;
 
+import com.tui.proof.ws.exception.LogicalException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,10 @@ public class ErrorInfo implements Serializable {
 
     static ErrorInfo of(RuntimeException e) {
         return of(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error");
+    }
+
+    static ErrorInfo of(LogicalException e) {
+        return of(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
     static ErrorInfo of(MissingServletRequestParameterException e) {

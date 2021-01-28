@@ -7,4 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class EventRepository extends InMemoryRepositoryImpl<EventModel> {
 
+    @Override
+    protected String getObjectName() {
+        return "event";
+    }
 }

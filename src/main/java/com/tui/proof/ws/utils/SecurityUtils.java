@@ -1,5 +1,6 @@
 package com.tui.proof.ws.utils;
 
+import com.tui.proof.ws.exception.LogicalException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -14,7 +15,7 @@ public final class SecurityUtils {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (isNull(authentication)) {
-            throw new RuntimeException("These is no user");
+            throw new LogicalException("These is no user");
         }
 
         return authentication.getName();

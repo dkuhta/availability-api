@@ -1,6 +1,7 @@
 package com.tui.proof.ws.service.booking;
 
 import com.tui.proof.ws.dto.booking.*;
+import com.tui.proof.ws.exception.LogicalException;
 import com.tui.proof.ws.model.booking.BookingModel;
 import com.tui.proof.ws.model.booking.BookingStatus;
 import com.tui.proof.ws.respository.booking.BookingRepository;
@@ -82,7 +83,7 @@ public class BookingServiceImpl implements BookingService {
 
     private void validateAvailability(String availabilityId) {
         if (availabilityService.isExpired(availabilityId)) {
-            throw new RuntimeException("Availability has been expired");
+            throw new LogicalException("Availability has been expired");
         }
     }
 
