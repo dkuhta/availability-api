@@ -1,11 +1,13 @@
 package com.tui.proof.ws.utils;
 
 import com.tui.proof.ws.dto.flight.FlightDto;
+import com.tui.proof.ws.model.monetary.Monetary;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -64,7 +66,7 @@ public final class RandomUtils {
         dto.setCompany(randomAlphanumeric(10));
         dto.setDate(LocalDate.now());
         dto.setHours(LocalTime.now());
-        dto.setPrice(randomLong());
+        dto.setPrice(new Monetary(new BigDecimal("150.50"), "USD"));
         return dto;
     }
 }
